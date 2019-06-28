@@ -52,7 +52,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190628095750",
+    "changelogDate": "20190628104454",
     "javadoc": "The Registrations entity.",
     "entityTableName": "registrations",
     "dto": "no",

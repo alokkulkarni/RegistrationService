@@ -22,7 +22,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190628095748",
+    "changelogDate": "20190628104452",
     "javadoc": "The Customer Validations entity.",
     "entityTableName": "customer_validations",
     "dto": "no",

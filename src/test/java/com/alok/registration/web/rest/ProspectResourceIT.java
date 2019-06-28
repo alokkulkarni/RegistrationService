@@ -4,6 +4,7 @@ import com.alok.registration.RegistrationServiceApp;
 import com.alok.registration.domain.Prospect;
 import com.alok.registration.repository.ProspectRepository;
 import com.alok.registration.repository.search.ProspectSearchRepository;
+import com.alok.registration.service.ProspectService;
 import com.alok.registration.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -71,6 +72,9 @@ public class ProspectResourceIT {
     @Autowired
     private ProspectRepository prospectRepository;
 
+    @Autowired
+    private ProspectService prospectService;
+
     /**
      * This repository is mocked in the com.alok.registration.repository.search test package.
      *
@@ -98,7 +102,7 @@ public class ProspectResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ProspectResource prospectResource = new ProspectResource(prospectRepository, mockProspectSearchRepository);
+        final ProspectResource prospectResource = new ProspectResource(prospectService);
         this.restProspectMockMvc = MockMvcBuilders.standaloneSetup(prospectResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -344,7 +348,9 @@ public class ProspectResourceIT {
     @Test
     public void updateProspect() throws Exception {
         // Initialize the database
-        prospectRepository.save(prospect);
+        prospectService.save(prospect);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockProspectSearchRepository);
 
         int databaseSizeBeforeUpdate = prospectRepository.findAll().size();
 
@@ -409,7 +415,7 @@ public class ProspectResourceIT {
     @Test
     public void deleteProspect() throws Exception {
         // Initialize the database
-        prospectRepository.save(prospect);
+        prospectService.save(prospect);
 
         int databaseSizeBeforeDelete = prospectRepository.findAll().size();
 
@@ -429,7 +435,7 @@ public class ProspectResourceIT {
     @Test
     public void searchProspect() throws Exception {
         // Initialize the database
-        prospectRepository.save(prospect);
+        prospectService.save(prospect);
         when(mockProspectSearchRepository.search(queryStringQuery("id:" + prospect.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(prospect), PageRequest.of(0, 1), 1));
         // Search the prospect

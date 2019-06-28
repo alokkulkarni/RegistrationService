@@ -16,7 +16,7 @@
             "ownerSide": true
         }
     ],
-    "changelogDate": "20190628095745",
+    "changelogDate": "20190628104449",
     "javadoc": "The Country entity.",
     "entityTableName": "country",
     "dto": "no",

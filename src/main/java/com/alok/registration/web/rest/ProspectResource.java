@@ -1,8 +1,7 @@
 package com.alok.registration.web.rest;
 
 import com.alok.registration.domain.Prospect;
-import com.alok.registration.repository.ProspectRepository;
-import com.alok.registration.repository.search.ProspectSearchRepository;
+import com.alok.registration.service.ProspectService;
 import com.alok.registration.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -26,7 +25,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -45,13 +43,10 @@ public class ProspectResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProspectRepository prospectRepository;
+    private final ProspectService prospectService;
 
-    private final ProspectSearchRepository prospectSearchRepository;
-
-    public ProspectResource(ProspectRepository prospectRepository, ProspectSearchRepository prospectSearchRepository) {
-        this.prospectRepository = prospectRepository;
-        this.prospectSearchRepository = prospectSearchRepository;
+    public ProspectResource(ProspectService prospectService) {
+        this.prospectService = prospectService;
     }
 
     /**
@@ -67,8 +62,7 @@ public class ProspectResource {
         if (prospect.getId() != null) {
             throw new BadRequestAlertException("A new prospect cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Prospect result = prospectRepository.save(prospect);
-        prospectSearchRepository.save(result);
+        Prospect result = prospectService.save(prospect);
         return ResponseEntity.created(new URI("/api/prospects/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -89,8 +83,7 @@ public class ProspectResource {
         if (prospect.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Prospect result = prospectRepository.save(prospect);
-        prospectSearchRepository.save(result);
+        Prospect result = prospectService.save(prospect);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, prospect.getId().toString()))
             .body(result);
@@ -107,7 +100,7 @@ public class ProspectResource {
     @GetMapping("/prospects")
     public ResponseEntity<List<Prospect>> getAllProspects(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of Prospects");
-        Page<Prospect> page = prospectRepository.findAll(pageable);
+        Page<Prospect> page = prospectService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -121,7 +114,7 @@ public class ProspectResource {
     @GetMapping("/prospects/{id}")
     public ResponseEntity<Prospect> getProspect(@PathVariable String id) {
         log.debug("REST request to get Prospect : {}", id);
-        Optional<Prospect> prospect = prospectRepository.findById(id);
+        Optional<Prospect> prospect = prospectService.findOne(id);
         return ResponseUtil.wrapOrNotFound(prospect);
     }
 
@@ -134,8 +127,7 @@ public class ProspectResource {
     @DeleteMapping("/prospects/{id}")
     public ResponseEntity<Void> deleteProspect(@PathVariable String id) {
         log.debug("REST request to delete Prospect : {}", id);
-        prospectRepository.deleteById(id);
-        prospectSearchRepository.deleteById(id);
+        prospectService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id)).build();
     }
 
@@ -152,7 +144,7 @@ public class ProspectResource {
     @GetMapping("/_search/prospects")
     public ResponseEntity<List<Prospect>> searchProspects(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to search for a page of Prospects for query {}", query);
-        Page<Prospect> page = prospectSearchRepository.search(queryStringQuery(query), pageable);
+        Page<Prospect> page = prospectService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }

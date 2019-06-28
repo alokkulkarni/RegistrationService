@@ -1,8 +1,7 @@
 package com.alok.registration.web.rest;
 
 import com.alok.registration.domain.Customer;
-import com.alok.registration.repository.CustomerRepository;
-import com.alok.registration.repository.search.CustomerSearchRepository;
+import com.alok.registration.service.CustomerService;
 import com.alok.registration.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
@@ -26,7 +25,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
 import static org.elasticsearch.index.query.QueryBuilders.*;
@@ -45,13 +43,10 @@ public class CustomerResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CustomerRepository customerRepository;
+    private final CustomerService customerService;
 
-    private final CustomerSearchRepository customerSearchRepository;
-
-    public CustomerResource(CustomerRepository customerRepository, CustomerSearchRepository customerSearchRepository) {
-        this.customerRepository = customerRepository;
-        this.customerSearchRepository = customerSearchRepository;
+    public CustomerResource(CustomerService customerService) {
+        this.customerService = customerService;
     }
 
     /**
@@ -67,8 +62,7 @@ public class CustomerResource {
         if (customer.getId() != null) {
             throw new BadRequestAlertException("A new customer cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Customer result = customerRepository.save(customer);
-        customerSearchRepository.save(result);
+        Customer result = customerService.save(customer);
         return ResponseEntity.created(new URI("/api/customers/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -89,8 +83,7 @@ public class CustomerResource {
         if (customer.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Customer result = customerRepository.save(customer);
-        customerSearchRepository.save(result);
+        Customer result = customerService.save(customer);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, customer.getId().toString()))
             .body(result);
@@ -107,7 +100,7 @@ public class CustomerResource {
     @GetMapping("/customers")
     public ResponseEntity<List<Customer>> getAllCustomers(Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to get a page of Customers");
-        Page<Customer> page = customerRepository.findAll(pageable);
+        Page<Customer> page = customerService.findAll(pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
@@ -121,7 +114,7 @@ public class CustomerResource {
     @GetMapping("/customers/{id}")
     public ResponseEntity<Customer> getCustomer(@PathVariable String id) {
         log.debug("REST request to get Customer : {}", id);
-        Optional<Customer> customer = customerRepository.findById(id);
+        Optional<Customer> customer = customerService.findOne(id);
         return ResponseUtil.wrapOrNotFound(customer);
     }
 
@@ -134,8 +127,7 @@ public class CustomerResource {
     @DeleteMapping("/customers/{id}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable String id) {
         log.debug("REST request to delete Customer : {}", id);
-        customerRepository.deleteById(id);
-        customerSearchRepository.deleteById(id);
+        customerService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id)).build();
     }
 
@@ -152,7 +144,7 @@ public class CustomerResource {
     @GetMapping("/_search/customers")
     public ResponseEntity<List<Customer>> searchCustomers(@RequestParam String query, Pageable pageable, @RequestParam MultiValueMap<String, String> queryParams, UriComponentsBuilder uriBuilder) {
         log.debug("REST request to search for a page of Customers for query {}", query);
-        Page<Customer> page = customerSearchRepository.search(queryStringQuery(query), pageable);
+        Page<Customer> page = customerService.search(query, pageable);
         HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(uriBuilder.queryParams(queryParams), page);
         return ResponseEntity.ok().headers(headers).body(page.getContent());
     }
