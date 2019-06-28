@@ -52,7 +52,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190628095746",
+    "changelogDate": "20190628104450",
     "javadoc": "not an ignored comment",
     "entityTableName": "address",
     "dto": "no",

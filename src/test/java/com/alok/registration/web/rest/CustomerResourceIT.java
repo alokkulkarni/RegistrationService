@@ -4,6 +4,7 @@ import com.alok.registration.RegistrationServiceApp;
 import com.alok.registration.domain.Customer;
 import com.alok.registration.repository.CustomerRepository;
 import com.alok.registration.repository.search.CustomerSearchRepository;
+import com.alok.registration.service.CustomerService;
 import com.alok.registration.web.rest.errors.ExceptionTranslator;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -68,6 +69,9 @@ public class CustomerResourceIT {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerService customerService;
+
     /**
      * This repository is mocked in the com.alok.registration.repository.search test package.
      *
@@ -95,7 +99,7 @@ public class CustomerResourceIT {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final CustomerResource customerResource = new CustomerResource(customerRepository, mockCustomerSearchRepository);
+        final CustomerResource customerResource = new CustomerResource(customerService);
         this.restCustomerMockMvc = MockMvcBuilders.standaloneSetup(customerResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -336,7 +340,9 @@ public class CustomerResourceIT {
     @Test
     public void updateCustomer() throws Exception {
         // Initialize the database
-        customerRepository.save(customer);
+        customerService.save(customer);
+        // As the test used the service layer, reset the Elasticsearch mock repository
+        reset(mockCustomerSearchRepository);
 
         int databaseSizeBeforeUpdate = customerRepository.findAll().size();
 
@@ -399,7 +405,7 @@ public class CustomerResourceIT {
     @Test
     public void deleteCustomer() throws Exception {
         // Initialize the database
-        customerRepository.save(customer);
+        customerService.save(customer);
 
         int databaseSizeBeforeDelete = customerRepository.findAll().size();
 
@@ -419,7 +425,7 @@ public class CustomerResourceIT {
     @Test
     public void searchCustomer() throws Exception {
         // Initialize the database
-        customerRepository.save(customer);
+        customerService.save(customer);
         when(mockCustomerSearchRepository.search(queryStringQuery("id:" + customer.getId()), PageRequest.of(0, 20)))
             .thenReturn(new PageImpl<>(Collections.singletonList(customer), PageRequest.of(0, 1), 1));
         // Search the customer

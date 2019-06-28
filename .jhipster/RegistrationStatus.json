@@ -11,7 +11,7 @@
         }
     ],
     "relationships": [],
-    "changelogDate": "20190628095751",
+    "changelogDate": "20190628104455",
     "javadoc": "The RegistrationStatus entity.",
     "entityTableName": "registration_status",
     "dto": "no",

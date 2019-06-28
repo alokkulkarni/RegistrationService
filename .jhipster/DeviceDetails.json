@@ -68,7 +68,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190628095749",
+    "changelogDate": "20190628104453",
     "javadoc": "The Device Detials entity.",
     "entityTableName": "device_details",
     "dto": "no",

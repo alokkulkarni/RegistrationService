@@ -83,12 +83,12 @@
             "relationshipName": "registrations"
         }
     ],
-    "changelogDate": "20190628095747",
+    "changelogDate": "20190628104451",
     "javadoc": "The Customer entity.",
     "entityTableName": "customer",
     "dto": "no",
     "pagination": "infinite-scroll",
-    "service": "no",
+    "service": "serviceImpl",
     "jpaMetamodelFiltering": false,
     "fluentMethods": true,
     "clientRootFolder": "registrationService",

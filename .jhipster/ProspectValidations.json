@@ -22,7 +22,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190628095753",
+    "changelogDate": "20190628104457",
     "javadoc": "The Prospect Validation entity.",
     "entityTableName": "prospect_validations",
     "dto": "no",
