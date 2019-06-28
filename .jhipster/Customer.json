@@ -1,0 +1,97 @@
+{
+    "name": "Customer",
+    "fields": [
+        {
+            "fieldName": "customerID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "firstName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Z]+"
+        },
+        {
+            "fieldName": "middleName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Z]+"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mobileNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dateOfBirth",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "address",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "address"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "customerValidations",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "customerValidations"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "deviceDetails",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "deviceDetails"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "registrations",
+            "otherEntityRelationshipName": "customer",
+            "relationshipName": "registrations"
+        }
+    ],
+    "changelogDate": "20190628095747",
+    "javadoc": "The Customer entity.",
+    "entityTableName": "customer",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}

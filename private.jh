@@ -1,0 +1,150 @@
+entity Region {
+	regionName String
+}
+
+/**
+ * The Country entity.
+ */
+entity Country {
+	countryName String
+}
+
+// an ignored comment
+/** not an ignored comment */
+entity Address {
+	streetAddress String required,
+	postalCode String required,
+	city String required,
+	stateProvince String required
+}
+
+/**
+ * The Customer entity.
+ */
+entity Customer {
+    customerID Long,
+	firstName String required pattern(/[A-Z]+/),
+    middleName String,
+	lastName String required pattern(/[A-Z]+/),
+	email String required 
+	phoneNumber String,
+    mobileNumber String required,
+	dateOfBirth String required,
+    gender String
+}
+
+/**
+ * The Customer Validations entity.
+ */
+entity CustomerValidations {
+    validationType String,
+    validationResult String,
+    validationDate LocalDate
+}
+
+/**
+ * The Device Detials entity.
+ */
+entity DeviceDetails {
+	deviceAID String,
+    deviceName String,
+    deviceType String,
+    deviceTypeVersion String,
+    deviceOS String,
+    deviceODversion String,
+    deviceCountry String,
+    deviceCountryISO String,
+    deviceServiceProvider String,
+    deviceMaster Boolean,
+    deviceApplicationVersion String,
+    deviceApplicationBuildVersion String,
+    deviceApplicationInstallationDate LocalDate
+}
+
+/**
+ * The Registrations entity.
+ */
+entity Registrations {
+	registrationType String,
+    firstRegistrationDate LocalDate,
+    registrationDate LocalDate,
+    registrationCancelled Boolean,
+    registrationCancellationDate LocalDate
+}
+
+/**
+ * The RegistrationStatus entity.
+ */
+entity RegistrationStatus {
+	registrationStatusCode Integer,
+    registrationsStatusDesc String
+}
+
+/**
+ * The Prospect entity.
+ */
+entity Prospect {
+    prospectID Long,
+    prospectARN String,
+	firstName String required pattern(/[A-Z]+/),
+    middleName String,
+	lastName String required pattern(/[A-Z]+/),
+	email String required
+	phoneNumber String,
+    mobileNumber String required,
+	dateOfBirth String required,
+    gender String
+}
+
+
+/**
+ * The Prospect Validation entity.
+ */
+entity ProspectValidations {
+    validationType String,
+    validationResult String,
+    validationDate LocalDate
+}
+
+enum Language {
+    FRENCH, ENGLISH, SPANISH
+}
+
+relationship OneToOne {
+	Country{region} to Region
+    Registrations{registrationStatus} to RegistrationStatus
+    Registrations{deviceDetials} to DeviceDetails
+}
+
+relationship OneToOne {
+	Address{country} to Country
+}
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Customer{address} to Address,
+    Prospect{address} to Address,
+    Customer{customerValidations} to CustomerValidations,
+    Prospect{prospectValidations} to ProspectValidations,
+    Customer{deviceDetails} to DeviceDetails,
+    Prospect{deviceDetails} to DeviceDetails,
+    Customer{registrations} to Registrations,
+    Prospect{registrations} to Registrations
+}
+
+//relationship ManyToOne {
+//	Employee{manager} to Employee
+//}
+
+// Set pagination options
+paginate Customer with infinite-scroll
+paginate Prospect with infinite-scroll
+paginate DeviceDetails with infinite-scroll
+paginate Registrations with infinite-scroll
+
+// Use Data Transfert Objects (DTO)
+// dto * with mapstruct
+
+// Set service options to all except few
+service all with serviceImpl except Customer
+service all with serviceImpl except Prospect

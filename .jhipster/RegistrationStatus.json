@@ -1,0 +1,25 @@
+{
+    "name": "RegistrationStatus",
+    "fields": [
+        {
+            "fieldName": "registrationStatusCode",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "registrationsStatusDesc",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [],
+    "changelogDate": "20190628095751",
+    "javadoc": "The RegistrationStatus entity.",
+    "entityTableName": "registration_status",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}

@@ -1,0 +1,101 @@
+{
+    "name": "Prospect",
+    "fields": [
+        {
+            "fieldName": "prospectID",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "prospectARN",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "firstName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Z]+"
+        },
+        {
+            "fieldName": "middleName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required",
+                "pattern"
+            ],
+            "fieldValidateRulesPattern": "[A-Z]+"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mobileNumber",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "dateOfBirth",
+            "fieldType": "String",
+            "fieldValidateRules": [
+                "required"
+            ]
+        },
+        {
+            "fieldName": "gender",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "address",
+            "otherEntityRelationshipName": "prospect",
+            "relationshipName": "address"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "prospectValidations",
+            "otherEntityRelationshipName": "prospect",
+            "relationshipName": "prospectValidations"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "deviceDetails",
+            "otherEntityRelationshipName": "prospect",
+            "relationshipName": "deviceDetails"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "otherEntityName": "registrations",
+            "otherEntityRelationshipName": "prospect",
+            "relationshipName": "registrations"
+        }
+    ],
+    "changelogDate": "20190628095752",
+    "javadoc": "The Prospect entity.",
+    "entityTableName": "prospect",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}

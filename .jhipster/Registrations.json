@@ -1,0 +1,66 @@
+{
+    "name": "Registrations",
+    "fields": [
+        {
+            "fieldName": "registrationType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "firstRegistrationDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "registrationDate",
+            "fieldType": "LocalDate"
+        },
+        {
+            "fieldName": "registrationCancelled",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "registrationCancellationDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "registrationStatus",
+            "otherEntityRelationshipName": "registrations",
+            "relationshipName": "registrationStatus",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-one",
+            "otherEntityName": "deviceDetails",
+            "otherEntityRelationshipName": "registrations",
+            "relationshipName": "deviceDetials",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipName": "prospect",
+            "otherEntityName": "prospect",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190628095750",
+    "javadoc": "The Registrations entity.",
+    "entityTableName": "registrations",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}
