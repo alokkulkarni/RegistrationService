@@ -1,0 +1,36 @@
+{
+    "name": "CustomerValidations",
+    "fields": [
+        {
+            "fieldName": "validationType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "validationResult",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "validationDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190628095748",
+    "javadoc": "The Customer Validations entity.",
+    "entityTableName": "customer_validations",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}

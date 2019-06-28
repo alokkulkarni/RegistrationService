@@ -1,0 +1,36 @@
+{
+    "name": "ProspectValidations",
+    "fields": [
+        {
+            "fieldName": "validationType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "validationResult",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "validationDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "prospect",
+            "otherEntityName": "prospect",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190628095753",
+    "javadoc": "The Prospect Validation entity.",
+    "entityTableName": "prospect_validations",
+    "dto": "no",
+    "pagination": "no",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}

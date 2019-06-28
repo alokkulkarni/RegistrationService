@@ -1,0 +1,82 @@
+{
+    "name": "DeviceDetails",
+    "fields": [
+        {
+            "fieldName": "deviceAID",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceType",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceTypeVersion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceOS",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceODversion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceCountry",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceCountryISO",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceServiceProvider",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceMaster",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "deviceApplicationVersion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceApplicationBuildVersion",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "deviceApplicationInstallationDate",
+            "fieldType": "LocalDate"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipName": "customer",
+            "otherEntityName": "customer",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "prospect",
+            "otherEntityName": "prospect",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190628095749",
+    "javadoc": "The Device Detials entity.",
+    "entityTableName": "device_details",
+    "dto": "no",
+    "pagination": "infinite-scroll",
+    "service": "serviceImpl",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "registrationService",
+    "applications": "*",
+    "microserviceName": "registrationService"
+}
