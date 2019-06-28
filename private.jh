@@ -146,5 +146,4 @@ paginate Registrations with infinite-scroll
 // dto * with mapstruct
 
 // Set service options to all except few
-service all with serviceImpl except Customer
-service all with serviceImpl except Prospect
+service all with serviceImpl
